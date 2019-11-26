@@ -1,0 +1,75 @@
+For the development of this service i used Java and the Spring Framework.I did not use a database instead i used a Singleton class that serves the purpose of a database and is where i store the data.
+
+Bonus : If i were requested to secure my API i would have created 2 seperate projects Service and Dal.
+		Service would handle the authentication and if it's succesfull it would send the request to Dal.
+		Dal would then communicate with the database implementing the underlying logic and return the results to the Service
+		which would finally send the response back to the client.
+		
+		We would be using the spring authorization.The client sends a request to our Service which checks if his credentials 
+		are correct and in turn creates a token that is sent back to the client.The token is saved to the client's RAM and it 
+		is attached to each new request he sends to the Service.The Service checks if the token has expired and if it's still active
+		it forwards the request to Dal.If the token is expired the Service sends an appropriate message to the client.
+
+HTTP verbs:
+
+POST : /service/products 
+		
+	   Requires a body that represents the new product.The required fields are : "name","price","expirationDate","availabilityDate"
+		
+	   Example json object: 
+	   {
+        "name": "pocophone",
+        "price": "150",
+        "expirationDate":"20/11/2019",
+        "availabilityDate":"20/10/2019"
+	   }
+	   
+	   If the product gets created successfully the response is a status code of 201 with the message "Product created successfully" attached.
+	   
+
+GET : /service/products?code={Integer}
+	  
+	  Requires a request parameter with the code of the product
+	  
+	  Example : /products?code=2
+	  
+	  Returns the Json object that includes the requested product.
+	  If no such product is found returns error status code of 404 with the message "Product not found" attached.
+
+GET : /service/products?name={String}
+
+	  Requires a request parameter with the name or part of the name of the product
+	  
+	  Examples : /products?name=pocophone , /products?name=poco
+	  
+	  Returns an array of  Json objects that include the  products whose name matches with the request parameter.
+	  If no such products are found returns an empty array.
+
+GET : /service/products/prices?order={String} 
+	  
+	  Requires a request parameter with the order that should be used to sort the products by price.
+	  "asc" for ascending order
+	  "desc" for descending order
+	  Different request parameter values or no request parameter will result in ascending order
+	  
+	  Examples : /products/prices?order=asc , /products/prices?order=desc , /products/prices
+	  
+	  Returns an array of  Json objects that include the  products in sorted order according to their price.
+	 
+PUT : /service/products/{code}?deactivate
+	
+	  Requires the request parameter deactivate and the path variable that is a product code.
+	  
+	  Example : /products/1?deactivate 
+	  
+	  If the product gets deactivated successfully the response is a status code of 200 with the message "Product deactivated successfully" attached.
+	  If the product is not found the response is a status code of 404 with the message "Product not found" attached.
+	  
+PUT : /service/products/{code}?reactivate
+	
+	  Requires the request parameter reactivate and the path variable that is a product code.
+	  
+	  Example : /products/1?reactivate 
+	  
+	  If the product gets reactivated successfully the response is a status code of 200 with the message "Product reactivated successfully" attached.
+	  If the product is not found the response is a status code of 404 with the message "Product not found" attached.
