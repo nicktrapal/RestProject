@@ -1,4 +1,5 @@
-I provide an executable (rest_demo.jar) that you can run with the command java -jar rest_demo.jar
+In my email I will provide an executable (rest_demo.jar) that you can run with the command java -jar rest_demo.jar
+
 Another way to run the code is via IntelliJ where the project was created using Java,SpringFramework and Maven for dependency management.
 
 I use a Singleton class as a database and it's empty when you run the programm.
